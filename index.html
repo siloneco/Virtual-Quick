@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sample</title>
+    <link rel="stylesheet" href="css/reset.min.css">
+    <link rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.css">
+    <link rel="stylesheet" href="node_modules/sweetalert2/dist/sweetalert2.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/members.css">
+
+    <!-- jQueryの関係で、JavaScript系は preload.js で読み込み -->
+    <script type="text/javascript" src="node_modules/materialize-css/dist/js/materialize.js"></script>
+</head>
+
+<body>
+    <header class="grey darken-1">
+    </header>
+    <div id="main-content" style="position: relative;">
+        <div id="left-bar" class="float-left"
+            style="height: 100%; background-color: whitesmoke; position: absolute; z-index: 10;">
+            <div class="collection" style="margin: 0 0;">
+                <!-- ホーム -->
+                <a id="left-collection-home" href="javascript:switchMainContent('home')"
+                    class="collection-item waves-effect active" style="height: 50px; width: 500px; padding-left: 13px">
+                    <i class="material-icons" style="float: left; font-size: 30px;">home</i>
+                    <i class="material-icons"
+                        style="float: left; padding-left: 10px; font-size: 30px;">keyboard_arrow_right</i>
+                    <p style="padding-left: 10px; font-size: 20px; padding-top: 3px; float: left;">
+                        Home
+                    </p>
+                </a>
+                <!-- 視聴 -->
+                <a id="left-collection-watch" href="javascript:switchMainContent('watch')"
+                    class="collection-item waves-effect" style="height: 50px; width: 500px; padding-left: 13px">
+                    <i class="material-icons" style="float: left; font-size: 30px;">ondemand_video</i>
+                    <i class="material-icons"
+                        style="float: left; padding-left: 10px; font-size: 30px;">keyboard_arrow_right</i>
+                    <p style="padding-left: 10px; font-size: 20px; padding-top: 3px; float: left;">
+                        Watch
+                    </p>
+                </a>
+                <!-- Members -->
+                <a id="left-collection-members" href="javascript:switchMainContent('members')"
+                    class="collection-item waves-effect" style="height: 50px; width: 500px; padding-left: 13px">
+                    <i class="material-icons" style="float: left; font-size: 30px;">supervised_user_circle</i>
+                    <i class="material-icons"
+                        style="float: left; padding-left: 10px; font-size: 30px;">keyboard_arrow_right</i>
+                    <p style="padding-left: 10px; font-size: 20px; padding-top: 3px; float: left;">
+                        Members
+                    </p>
+                </a>
+                <!-- Holo Tips -->
+                <a id="left-collection-holo-tips" href="javascript:switchMainContent('holo-tips')"
+                    class="collection-item waves-effect" style="height: 50px; width: 500px; padding-left: 13px">
+                    <i class="material-icons" style="float: left; font-size: 30px;">library_books</i>
+                    <i class="material-icons"
+                        style="float: left; padding-left: 10px; font-size: 30px;">keyboard_arrow_right</i>
+                    <p style="padding-left: 10px; font-size: 20px; padding-top: 3px; float: left;">
+                        Holo Tips
+                    </p>
+                </a>
+                <!-- Holo Words -->
+                <a id="left-collection-holo-words" href="javascript:switchMainContent('holo-words')"
+                    class="collection-item waves-effect" style="height: 50px; width: 500px; padding-left: 13px">
+                    <i class="material-icons" style="float: left; font-size: 30px;">chat</i>
+                    <i class="material-icons"
+                        style="float: left; padding-left: 10px; font-size: 30px;">keyboard_arrow_right</i>
+                    <p style="padding-left: 10px; font-size: 20px; padding-top: 3px; float: left;">
+                        Holo Words
+                    </p>
+                </a>
+                <!-- 初心者 -->
+                <a id="left-collection-newbies" href="javascript:switchMainContent('newbies')"
+                    class="collection-item waves-effect" style="height: 50px; width: 500px; padding-left: 13px">
+                    <i class="material-icons" style="float: left; font-size: 30px;">live_help</i>
+                    <i class="material-icons"
+                        style="float: left; padding-left: 10px; font-size: 30px;">keyboard_arrow_right</i>
+                    <p style="padding-left: 10px; font-size: 20px; padding-top: 3px; float: left;">
+                        For New Holo Fans
+                    </p>
+                </a>
+            </div>
+            <!-- 背景画像 -->
+            <div id="left-bar-img" style="z-index: 11;"></div>
+            <div id="holo-tips-card-and-link" style="z-index: 12;">
+                <div class="col s12 m6" style="overflow: hidden; width: 300px; padding: 0px 10px;">
+                    <div class="card blue lighten-1" style="margin-bottom: 10px;">
+                        <div class="card-content white-text" style="padding-bottom: 5px;">
+                            <span class="card-title grey-text text-lighten-2" style="font-weight: bold;">Holo
+                                Tips</span>
+                            桐生ココは12/28にデビューし、「来年までに登録者10万人を突破することが目標、できなければ、たつのこ(視聴者)が1人犠牲になる」と言い、4日後の元旦に先輩の夏色まつりが犠牲になった。
+                        </div>
+                        <div class="card-action">
+                            <a class="waves-effect waves-light btn teal darken-1"><i
+                                    class="material-icons left">send</i>詳しく見る</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="black-cover" style="z-index: 2;"></div>
+        <div id="contents-space" class="float-left" style="z-index: 5;">
+
+            <div id="home" class="main-content"></div>
+            <div id="watch" class="main-content"></div>
+            <div id="members" class="main-content" style="display: block;">
+            </div>
+        </div>
+        <div id="holo-tips" class="main-content"></div>
+        <div id="newbies" class="main-content"></div>
+    </div>
+    </div>
+
+    <!-- 画像ポップアップ -->
+    <div id="sidebar-img-popup" class="modal">
+        <div class="modal-content">
+            <img src="img/image.jpg" style="filter: none; -webkit-user-select: none;" />
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">閉じる</a>
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript">
+    M.AutoInit();
+</script>
+
+</html>
