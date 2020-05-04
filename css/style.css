@@ -36,13 +36,13 @@ header {
 
 #left-bar-img {
     width: 300px;
-    height: calc(100% - 252px);
+    height: calc(100% - 302px);
     filter: blur(3px);
     transition: opacity 0.5s;
     position: relative;
     z-index: 100;
     opacity: 0;
-    background-image: url(../img/image2.jpg);
+    background-image: url(../img/image.jpg);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
