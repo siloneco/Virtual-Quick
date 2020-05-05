@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Sample</title>
+    <title>Virtual Quick</title>
     <link rel="stylesheet" href="css/reset.min.css">
     <link rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.css">
     <link rel="stylesheet" href="node_modules/sweetalert2/dist/sweetalert2.css">
@@ -102,12 +102,50 @@
                 </div>
             </div>
         </div>
-        <div id="black-cover" style="z-index: 2;"></div>
+        <div id="black-cover" style="z-index: 9; pointer-events: none;"></div>
         <div id="contents-space" class="float-left" style="z-index: 5;">
 
             <div id="home" class="main-content"></div>
             <div id="watch" class="main-content"></div>
             <div id="members" class="main-content" style="display: block;">
+                <div id="members-row" class="row">
+                    <div class="col s12" style="padding: 0px;">
+                        <ul class="tabs">
+                            <li class="tab col s2"><a class="member-tab active" href="#holo-members-all">All</a></li>
+                            <li class="tab col s2"><a class="member-tab" href="#holo-members-normal">Normal</a></li>
+                            <li class="tab col s2"><a class="member-tab" href="#holo-members-stars">Holostars</a></li>
+                            <li class="tab col s2"><a class="member-tab" href="#holo-members-indonesia">Hololive ID</a>
+                            </li>
+                            <li class="tab col s2"><a class="member-tab" href="#holo-members-china">Hololive China</a>
+                            </li>
+                            <li class="tab col s2"><a class="member-tab" href="#holo-members-staff">Staff</a></li>
+                        </ul>
+                    </div>
+                    <div id="holo-members-all" class="col members-tab"></div>
+                    <div id="holo-members-normal" class="col members-tab"></div>
+                    <div id="holo-members-stars" class="col members-tab"></div>
+                    <div id="holo-members-indonesia" class="col members-tab"></div>
+                    <div id="holo-members-china" class="col members-tab"></div>
+                    <div id="holo-members-staff" class="col members-tab"></div>
+                    <div style="position: relative; float: left;">
+                        <div id="member-display" style="display: none;">
+                            <div id="member-display-image-container">
+                                <img id="members-body-img" src="img/SoraBody.png" alt="SoraBody">
+                            </div>
+                            <div id="member-display-content-space" style="display: block;">
+                                <p id="member-display-name-top">ときのそら</p>
+                                <div id="member-display-link">
+                                    <a id="member-display-yt-link" class="waves-effect waves-light btn red"
+                                        onclick="event.preventDefault(); openUrl(this.href);"><i
+                                            class="fab fa-youtube"></i></a>
+                                    <a id="member-display-twitter-link" class="waves-effect waves-light btn blue"
+                                        onclick="event.preventDefault(); openUrl(this.href);"><i
+                                            class="fab fa-twitter"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="holo-tips" class="main-content"></div>

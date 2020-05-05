@@ -22,3 +22,16 @@ function leftBarOpen() {
     $("#left-bar-img").css("opacity", 1);
     // $("#left-bar-img").css("background-image", "url(img/image.jpg)");
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    var elems = document.querySelectorAll('.tooltipped');
+    var instances = M.Tooltip.init(elems, options);
+});
+
+function openUrl(url) {
+    shell.openExternal(url);
+}
+
+function escape(text) {
+    return text.replace(/&/g, '&amp').replace(/"/g, '&quot').replace(/'/g, '&#39').replace(/</g, '&lt').replace(/>/g, '&gt');
+}

@@ -7,8 +7,8 @@ const ipcMain = electron.ipcMain;
 // アプリケーションをコントロールするモジュール
 const app = electron.app;
 
-// path
 const path = require('path');
+const fs = require('fs');
 
 // ウィンドウを作成するモジュール
 const BrowserWindow = electron.BrowserWindow;
@@ -23,10 +23,8 @@ app.on("window-all-closed", () => {
     }
 });
 
-
 // Electronの初期化完了後に実行
 app.on("ready", () => {
-    //ウィンドウサイズを1280*720（フレームサイズを含まない）に設定する
     mainWindow = new BrowserWindow({
         width: 1700,
         height: 850,
@@ -52,3 +50,27 @@ app.on("ready", () => {
         mainWindow = null;
     });
 });
+
+// メンバーの情報がリクエストされたら返す
+ipcMain.on("request-members-data", (event, arg) => {
+    fs.readdir('./debugData/members', function (err, files) {
+        if (err) throw err;
+        var fileList = files.filter(function (file) {
+            return fs.statSync('./debugData/members/' + file).isFile() && /.*\.json$/.test('./debugData/members/' + file); //絞り込み
+        })
+
+        const objects = [];
+
+        for (file of fileList) {
+            const jsonObject = JSON.parse(fs.readFileSync("./debugData/members/" + file, 'utf8'));
+            objects.push(jsonObject);
+        }
+
+        event.sender.send("add-member", objects);
+    });
+});
+
+ipcMain.on("open-url", (event, arg) => {
+    electron.shell.openExternal(arg);
+    console.log("test");
+})
