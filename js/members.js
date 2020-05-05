@@ -22,6 +22,8 @@ function changeDisplayMember(memberName) {
     $("#member-display-yt-link").attr("href", escape(data.link.youtube));
     $("#member-display-twitter-link").attr("href", escape(data.link.twitter));
 
+    $("#member-display-description").text(escape(data.description));
+
     if (data.link.extra !== undefined) {
         for (linkData of data.link.extra) {
             $("<a>", {

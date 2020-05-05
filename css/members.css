@@ -72,6 +72,11 @@
     padding-left: 10px;
 }
 
+#member-display-description {
+    margin-top: 10px;
+    width: 500px;
+}
+
 #members-row ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
