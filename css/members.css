@@ -77,6 +77,10 @@
     width: 500px;
 }
 
+#member-display-table {
+    margin-top: 10px;
+}
+
 #members-row ::-webkit-scrollbar {
     width: 10px;
     height: 10px;

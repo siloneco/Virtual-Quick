@@ -24,6 +24,12 @@ function changeDisplayMember(memberName) {
 
     $("#member-display-description").text(escape(data.description));
 
+    $("#member-display-debut-date").text(escape(data.debutDate));
+    $("#member-display-birthday").text(escape(data.birthday));
+    $("#member-display-height").text(escape(data.height));
+    $("#member-display-illustrator").attr("href", escape(data.illustrator.link));
+    $("#member-display-illustrator").text(escape(data.illustrator.name));
+
     if (data.link.extra !== undefined) {
         for (linkData of data.link.extra) {
             $("<a>", {
@@ -44,7 +50,8 @@ function addMember(data) {
 
     const elem = $("<a>", {
         class: "waves-effect btn-flat member-choose-button",
-        onclick: "changeDisplayMember(this.text);"
+        onclick: "changeDisplayMember(this.text);",
+        priority: data.priority
     }).append(
         $("<img>", {
             src: data.iconSource,
@@ -65,12 +72,19 @@ function addMember(data) {
 
 
 ipcRenderer.on('add-member', (event, arg) => {
+    const categories = ["all"];
     if (Array.isArray(arg)) {
         for (const data of arg) {
             addMember(data);
+            categories.push(data.category);
         }
     } else {
-        addMember(arg)
+        addMember(arg);
+        categories.push(arg.category);
+    }
+
+    for (const category of categories) {
+        sortMembers("holo-members-" + category);
     }
 });
 
@@ -78,4 +92,14 @@ ipcRenderer.send("request-members-data");
 
 function escape(text) {
     return text.replace(/&/g, '&amp').replace(/"/g, '&quot').replace(/'/g, '&#39').replace(/</g, '&lt').replace(/>/g, '&gt');
+}
+
+function sortMembers(id) {
+    //ソートを行う
+    const sorted = $('#' + id).children().sort(function (a, b) {
+        return ($(a).attr("priority") < $(b).attr("priority") ? 1 : -1);  //ソート条件
+    });
+
+    $("#" + id).children().remove();
+    $("#" + id).append(sorted);
 }
