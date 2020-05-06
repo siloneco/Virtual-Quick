@@ -30,6 +30,8 @@ function changeDisplayMember(memberName) {
     $("#member-display-illustrator").attr("href", escape(data.illustrator.link));
     $("#member-display-illustrator").text(escape(data.illustrator.name));
 
+    $("#member-display-suggest-vid").attr("src", "https://www.youtube.com/embed/" + escape(data.suggestVideoID));
+
     if (data.link.extra !== undefined) {
         for (linkData of data.link.extra) {
             $("<a>", {
