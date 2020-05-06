@@ -51,23 +51,26 @@ app.on("ready", () => {
     });
 });
 
-// メンバーの情報がリクエストされたら返す
-ipcMain.on("request-members-data", (event, arg) => {
-    fs.readdir('./debugData/members', function (err, files) {
-        if (err) throw err;
-        var fileList = files.filter(function (file) {
-            return fs.statSync('./debugData/members/' + file).isFile() && /.*\.json$/.test('./debugData/members/' + file); //絞り込み
-        })
-
+function readAllJSONAndSend(path, sender) {
+    fs.readdir(path, (err, files) => {
         const objects = [];
 
-        for (file of fileList) {
-            const jsonObject = JSON.parse(fs.readFileSync("./debugData/members/" + file, 'utf8'));
-            objects.push(jsonObject);
+        for (const file of files) {
+            if (fs.statSync(path + "/" + file).isFile() && /.*\.json$/.test(path + "/" + file)) {
+                const jsonObject = JSON.parse(fs.readFileSync(path + "/" + file, 'utf8'));
+                objects.push(jsonObject);
+            } else if (fs.statSync(path + "/" + file).isDirectory()) {
+                readAllJSONAndSend(path + "/" + file, sender);
+            }
         }
 
-        event.sender.send("add-member", objects);
+        sender.send("add-member", objects);
     });
+}
+
+// メンバーの情報がリクエストされたら返す
+ipcMain.on("request-members-data", (event, arg) => {
+    readAllJSONAndSend('./debugData/members', event.sender);
 });
 
 ipcMain.on("open-url", (event, arg) => {
