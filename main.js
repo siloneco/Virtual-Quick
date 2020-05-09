@@ -7,6 +7,8 @@ const ipcMain = electron.ipcMain;
 // アプリケーションをコントロールするモジュール
 const app = electron.app;
 
+const crypto = require('crypto');
+const https = require('https');
 const path = require('path');
 const fs = require('fs');
 
@@ -68,12 +70,59 @@ function readAllJSONAndSend(path, sender) {
     });
 }
 
+function downloadFile(url, path) {
+    console.log("downloading... " + url);
+    let mkdirPath = "./";
+    if (path.includes("/")) {
+        mkdirPath = path.substring(0, path.lastIndexOf("/"));
+    }
+
+    fs.mkdir(mkdirPath, { recursive: true }, (err) => {
+        https.get(url, function (res) {
+            var outfile = fs.createWriteStream(path, { encoding: "utf-8" });
+            res.pipe(outfile);
+            res.on('end', function () {
+                outfile.close();
+            });
+        });
+    });
+}
+
+function updateAllResources() {
+    https.get("https://virtualquick.now.sh/fileHashList.json", function (res) {
+        var body = '';
+        res.setEncoding('utf8');
+        res.on('data', function (chunk) {
+            body += chunk;
+        });
+        res.on('data', function (chunk) {
+            // body の値を json としてパースしている
+            res = JSON.parse(body);
+
+            for (const map of res) {
+                if (!fs.existsSync(map[0])) {
+                    downloadFile("https://virtualquick.now.sh/" + map[0], map[0]);
+                } else {
+                    const currentHash = crypto.createHash('sha1').update(fs.readFileSync(map[0])).digest("hex");
+                    if (currentHash !== map[1]) {
+                        downloadFile("https://virtualquick.now.sh/" + map[0], map[0]);
+                    }
+                }
+            }
+        })
+    }).on('error', function (e) {
+        console.log(e.message);
+    });
+}
+
 // メンバーの情報がリクエストされたら返す
 ipcMain.on("request-members-data", (event, arg) => {
-    readAllJSONAndSend('./debugData/members', event.sender);
+    readAllJSONAndSend('./resource/members', event.sender);
 });
 
 ipcMain.on("open-url", (event, arg) => {
     electron.shell.openExternal(arg);
     console.log("test");
-})
+});
+
+updateAllResources();
