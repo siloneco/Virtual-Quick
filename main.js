@@ -72,6 +72,7 @@ function readAllJSONAndSend(path, sender) {
 
 function downloadFile(url, path) {
     console.log("downloading... " + url);
+    path = path.split('\\').join('/');
     let mkdirPath = "./";
     if (path.includes("/")) {
         mkdirPath = path.substring(0, path.lastIndexOf("/"));
@@ -100,12 +101,13 @@ function updateAllResources() {
             res = JSON.parse(body);
 
             for (const map of res) {
-                if (!fs.existsSync(map[0])) {
-                    downloadFile("https://virtualquick.now.sh/" + map[0], map[0]);
+                const filePath = `${__dirname}/${map[0]}`;
+                if (!fs.existsSync(filePath)) {
+                    downloadFile("https://virtualquick.now.sh/" + map[0], filePath);
                 } else {
-                    const currentHash = crypto.createHash('sha1').update(fs.readFileSync(map[0])).digest("hex");
+                    const currentHash = crypto.createHash('sha1').update(fs.readFileSync(filePath)).digest("hex");
                     if (currentHash !== map[1]) {
-                        downloadFile("https://virtualquick.now.sh/" + map[0], map[0]);
+                        downloadFile("https://virtualquick.now.sh/" + map[0], filePath);
                     }
                 }
             }
@@ -117,12 +119,11 @@ function updateAllResources() {
 
 // メンバーの情報がリクエストされたら返す
 ipcMain.on("request-members-data", (event, arg) => {
-    readAllJSONAndSend('./resource/members', event.sender);
+    readAllJSONAndSend(`${__dirname}/resource/members`, event.sender);
 });
 
 ipcMain.on("open-url", (event, arg) => {
     electron.shell.openExternal(arg);
-    console.log("test");
 });
 
 updateAllResources();
