@@ -3,6 +3,7 @@
     width: 30px;
     margin-top: 2.5px;
     margin-right: 5px;
+    filter: none !important;
 }
 
 .member-choose-button {
