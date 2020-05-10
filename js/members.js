@@ -57,7 +57,6 @@ function addMember(data) {
     }).append(
         $("<img>", {
             src: data.iconSource,
-            alt: data.name,
             class: "member-choose-button-icon",
             style: "float: left;"
         })
