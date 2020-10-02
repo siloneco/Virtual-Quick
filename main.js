@@ -1,4 +1,4 @@
-"use strct";
+"use strict";
 
 // Electronのモジュール
 const electron = require('electron');
